@@ -1,4 +1,5 @@
 function main(){
-    console.log("working")
+    const testlink=new URL("working");
+    console.log(testlink);
 }
 main();
