@@ -1,5 +1,21 @@
 const {JSDOM}=require("jsdom");
 
+async function crawlPage(baseURL){
+    console.log(`active crawling ${baseURL}`);
+    try {
+       const resp=await fetch(baseURL);
+//       console.log(await resp.headers); 
+        const contentType=resp.headers.get('content-type');
+        if(!contentType.includes('text/html')){
+            console.log(`non html response : ${contentType} on page : ${baseURL}`);
+            return ;
+        }
+        console.log(await resp.text());
+    } catch (error) {
+        console.log(`error in fetch : ${error.message} on pgae : ${baseURL}`);
+    }
+}
+
 function removeLast(input){
     if(input.slice(-1)==='/'){
         return input.slice(0,-1);
@@ -48,4 +64,5 @@ function normalizeURL(urlString){
 module.exports={
     normalizeURL,
     getURLsFromHTML,
+    crawlPage
 }
